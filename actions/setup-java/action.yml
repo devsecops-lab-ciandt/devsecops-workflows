@@ -31,8 +31,8 @@ runs:
       with:
         path: |
           ~/.m2/repository
-          /root/.m2/repository
           /home/runner/.m2/repository
-        key: ${{ runner.os }}-java-maven-${{ hashFiles('**/pom.xml') }}
+          /root/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
-          ${{ runner.os }}-java-maven-
+          ${{ runner.os }}-maven-
