@@ -6,7 +6,7 @@ on:
 jobs:
   reusable_workflow_test:
     name: Reusable
-    runs-on: ubuntu-24.04
+    runs-on: rss-primary
     container:
       image: maven:3.9.2
     env:
