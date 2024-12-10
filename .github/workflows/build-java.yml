@@ -6,7 +6,7 @@ on:
 jobs:
   reusable_workflow_build:
     name: Reusable
-    runs-on: rss-secondary-linux
+    runs-on: ${{ inputs.runner_scale_set }}
     env:
       PRJ_FULL_PATH: ${{ github.workspace }}/base-code
       ADM_FULL_PATH: ${{ github.workspace }}/devsecops-code

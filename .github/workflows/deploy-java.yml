@@ -6,10 +6,15 @@ on:
 jobs:
   reusable_workflow_deploy:
     name: Reusable
-    runs-on: rss-primary-linux
+    runs-on: ${{ inputs.runner_scale_set }}
     env:
       PRJ_FULL_PATH: ${{ github.workspace }}/base-code
       ADM_FULL_PATH: ${{ github.workspace }}/devsecops-code
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/')
+    environment: ${{
+      github.ref == 'refs/heads/master' && 'PRD' ||
+      github.ref == 'refs/heads/develop' && 'DSV' ||
+      startsWith(github.ref, 'refs/heads/release/') && 'HML' }}
     steps:
       - name: Get Composite
         uses: actions/checkout@v4
