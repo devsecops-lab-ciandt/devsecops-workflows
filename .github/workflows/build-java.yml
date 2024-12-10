@@ -27,7 +27,6 @@ jobs:
         run: |
           mvn -B -DskipTests clean package
           ls -l
-          sudo chown -R $(whoami) /root/.m2/repository
         working-directory: ${{ env.PRJ_FULL_PATH }}
 
       - uses: actions/upload-artifact@v4
