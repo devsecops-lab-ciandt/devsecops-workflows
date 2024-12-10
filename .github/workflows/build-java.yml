@@ -6,7 +6,9 @@ on:
 jobs:
   reusable_workflow_build:
     name: Reusable
-    runs-on: rss-primary
+    runs-on: rss-primary-linux
+    container:
+      image: maven:3.9.2
     env:
       PRJ_FULL_PATH: ${{ github.workspace }}/base-code
       ADM_FULL_PATH: ${{ github.workspace }}/devsecops-code
