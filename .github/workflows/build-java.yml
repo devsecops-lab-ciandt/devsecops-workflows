@@ -27,8 +27,8 @@ jobs:
         run: |
           mvn -B -DskipTests clean package
           ls -l
-          chown -R 1001:1001 ~/.m2/repository
-          chown -R 1001:1001 /root/.m2/repository
+          sudo chown -R 1001:1001 ~/.m2/repository
+          sudo chown -R 1001:1001 /root/.m2/repository
         working-directory: ${{ env.PRJ_FULL_PATH }}
 
       - uses: actions/upload-artifact@v4
