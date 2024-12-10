@@ -23,16 +23,11 @@ runs:
         distribution: 'temurin'
         java-version: ${{ inputs.jdk_version }}
 
-    - uses: stCarolas/setup-maven@v5
-      with:
-        maven-version: 3.9.2
-
     - uses: actions/cache@v4
       with:
         path: |
           ~/.m2/repository
-          /home/runner/.m2/repository
-        #  /root/.m2/repository
+          /root/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
