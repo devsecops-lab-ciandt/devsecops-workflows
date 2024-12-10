@@ -1,0 +1,33 @@
+name: 'Set Up Java'
+description: 'Configures the environment for Java projects, ensuring the specified JDK version is installed and ready for use.'
+author: 'dumasmcarvalho'
+inputs:
+  jdk_version:
+    description: |
+      Specify the Java version for the project.
+      Default is '17', a recommended LTS version.
+    default: '17'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        path: ${{ env.PRJ_FULL_PATH }}
+
+    - shell: bash
+      run: |
+        ls -l
+
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: ${{ inputs.jdk_version }}
+
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.m2/repository
+          /root/.m2/repository
+        key: ${{ runner.os }}-java-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-java-maven-

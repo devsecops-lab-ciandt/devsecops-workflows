@@ -1,0 +1,39 @@
+name: Deploy Java
+
+on:
+  workflow_call:
+
+jobs:
+  reusable_workflow_deploy:
+    name: Reusable
+    runs-on: ubuntu-24.04
+    container:
+      image: maven:3.9.2
+    env:
+      PRJ_FULL_PATH: ${{ github.workspace }}/base-code
+      ADM_FULL_PATH: ${{ github.workspace }}/devsecops-code
+    steps:
+      - name: Get Composite
+        uses: actions/checkout@v4
+        with:
+          repository: devsecops-lab-ciandt/devsecops-workflows
+          ref: main
+          path: ${{ env.ADM_FULL_PATH }}
+
+      - name: Run Composite
+        uses: ./devsecops-code/actions/setup-java
+        with:
+          jdk_version: '17'
+
+      - uses: actions/download-artifact@v4
+        name: Download Artifacts
+        with:
+          name: package
+          path: ${{ env.PRJ_FULL_PATH }}/target
+
+      - name: Deploy App
+        run: |
+          ls -l
+          chmod +x scripts/deliver.sh
+          ./scripts/deliver.sh
+        working-directory: ${{ env.PRJ_FULL_PATH }}
