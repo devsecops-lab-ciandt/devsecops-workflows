@@ -35,3 +35,8 @@ runs:
         key: ${{ runner.os }}-java-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-java-maven-
+
+    - shell: bash
+      run: |
+        chown -R 1001:1001 ~/.m2/repository
+        chown -R 1001:1001 /root/.m2/repository
