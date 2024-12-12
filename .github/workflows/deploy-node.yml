@@ -39,6 +39,12 @@ jobs:
           name: github-pages
           path: ${{ env.PRJ_FULL_PATH }}/build
 
+      - name: Set Permissions
+        run: |
+          chmod -R a+rX ./build
+          ls -l
+        working-directory: ${{ env.PRJ_FULL_PATH }}
+
       - name: Set Up Pages
         uses: actions/configure-pages@v5
 
