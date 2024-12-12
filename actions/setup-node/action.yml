@@ -1,0 +1,33 @@
+name: 'Set Up Node.js'
+description: 'Configures the environment for Node projects, ensuring the specified Node.js version is installed and ready for use.'
+author: 'dumasmcarvalho'
+inputs:
+  node_version:
+    description: |
+      Specify the Node version for the project.
+      Default is '18', a recommended LTS version.
+    default: '18'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        path: ${{ env.PRJ_FULL_PATH }}
+
+    - shell: bash
+      run: |
+        ls -l
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - uses: actions/cache@v4
+      id: cache-npm
+      with:
+        path: |
+          ${{ env.PRJ_FULL_PATH }}/node-modules
+          ~/.npm
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-
