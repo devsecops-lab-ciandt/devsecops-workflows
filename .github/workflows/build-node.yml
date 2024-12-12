@@ -25,8 +25,13 @@ jobs:
         with:
           node_version: '18'
 
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: NPM List
+        continue-on-error: true
+        run: npm list
+        working-directory: ${{ env.PRJ_FULL_PATH }}
+
       - name: NPM Install
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: |
           npm ci
           ls -l

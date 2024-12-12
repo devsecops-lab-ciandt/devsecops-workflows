@@ -38,7 +38,7 @@ jobs:
 
       - name: Deploy App
         run: |
-          ls -l
           chmod +x scripts/deliver.sh
           ./scripts/deliver.sh
+          ls -l
         working-directory: ${{ env.PRJ_FULL_PATH }}

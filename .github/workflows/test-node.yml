@@ -27,7 +27,7 @@ jobs:
 
       - name: NPM Test
         run: |
-          ls -l
           chmod +x scripts/test.sh
           ./scripts/test.sh
+          ls -l
         working-directory: ${{ env.PRJ_FULL_PATH }}
