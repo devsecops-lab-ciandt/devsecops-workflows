@@ -36,10 +36,10 @@ jobs:
       - uses: actions/download-artifact@v4
         name: Download Artifacts
         with:
-          name: package
+          name: github-pages
           path: ${{ env.PRJ_FULL_PATH }}/build
 
-      - name: Setup Pages
+      - name: Set Up Pages
         uses: actions/configure-pages@v5
 
       - name: Deploy to GitHub Pages

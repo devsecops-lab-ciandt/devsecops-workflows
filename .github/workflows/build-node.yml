@@ -41,6 +41,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         name: Upload Artifacts
         with:
-          name: package
+          name: github-pages
           path: ${{ env.PRJ_FULL_PATH }}/build
           retention-days: 1
