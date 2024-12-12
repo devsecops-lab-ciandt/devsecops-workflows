@@ -1,0 +1,33 @@
+name: Test Node
+
+on:
+  workflow_call:
+
+jobs:
+  reusable_workflow_test:
+    name: Reusable
+    runs-on: ${{ inputs.runner_scale_set }}
+    container:
+      image: node:lts-buster-slim
+    env:
+      PRJ_FULL_PATH: ${{ github.workspace }}/base-code
+      ADM_FULL_PATH: ${{ github.workspace }}/devsecops-code
+    steps:
+      - name: Get Composite
+        uses: actions/checkout@v4
+        with:
+          repository: devsecops-lab-ciandt/devsecops-workflows
+          ref: main
+          path: ${{ env.ADM_FULL_PATH }}
+
+      - name: Run Composite
+        uses: ./devsecops-code/actions/setup-node
+        with:
+          node_version: '18'
+
+      - name: NPM Test
+        run: |
+          ls -l
+          chmod +x scripts/test.sh
+          ./scripts/test.sh
+        working-directory: ${{ env.PRJ_FULL_PATH }}

@@ -1,0 +1,42 @@
+name: Deploy Node
+
+on:
+  workflow_call:
+
+jobs:
+  reusable_workflow_deploy:
+    name: Reusable
+    runs-on: ${{ inputs.runner_scale_set }}
+    container:
+      image: node:lts-buster-slim
+    env:
+      PRJ_FULL_PATH: ${{ github.workspace }}/base-code
+      ADM_FULL_PATH: ${{ github.workspace }}/devsecops-code
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Get Composite
+        uses: actions/checkout@v4
+        with:
+          repository: devsecops-lab-ciandt/devsecops-workflows
+          ref: main
+          path: ${{ env.ADM_FULL_PATH }}
+
+      - name: Run Composite
+        uses: ./devsecops-code/actions/setup-node
+        with:
+          node_version: '18'
+
+      - uses: actions/download-artifact@v4
+        name: Download Artifacts
+        with:
+          name: package
+          path: ${{ env.PRJ_FULL_PATH }}/build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
