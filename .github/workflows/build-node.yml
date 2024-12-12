@@ -38,9 +38,8 @@ jobs:
           ls -l
         working-directory: ${{ env.PRJ_FULL_PATH }}
 
-      - uses: actions/upload-artifact@v4
-        name: Upload Artifacts
+      - name: Upload Artifacts
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
           path: ${{ env.PRJ_FULL_PATH }}/build
-          retention-days: 1
