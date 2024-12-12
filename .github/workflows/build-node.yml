@@ -26,6 +26,7 @@ jobs:
           node_version: '18'
 
       - name: NPM Install
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: |
           npm ci
           ls -l
