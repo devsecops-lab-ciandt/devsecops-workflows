@@ -11,6 +11,7 @@ on:
 jobs:
   reusable_workflow_deploy:
     name: Reusable
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/')
     runs-on: ${{ inputs.runner_scale_set }}
     container:
       image: node:lts-buster-slim
